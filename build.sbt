@@ -4,19 +4,19 @@ crossScalaVersions in ThisBuild := Seq("2.10.4", "2.11.0")
 
 crossPaths := true
 
-lazy val root = (project in file(".")).configs(IntegrationTest).aggregate(play2_3JavaClient, play2_2JavaClient, scalaClient)
+lazy val root = (project in file(".")).configs(IntegrationTest).aggregate(`play-2_3-java-client`, `play-2_2-java-client`, `scala-client`)
 
-lazy val play2_3JavaClient = project.configs(IntegrationTest).settings(
+lazy val `play-2_3-java-client` = project.configs(IntegrationTest).settings(
   libraryDependencies += "com.typesafe.play" %% "play-java" % "2.3.5"
-).dependsOn(scalaClient)
+).dependsOn(`scala-client`)
 
-lazy val play2_2JavaClient = project.configs(IntegrationTest).settings(
+lazy val `play-2_2-java-client` = project.configs(IntegrationTest).settings(
   libraryDependencies += "com.typesafe.play" %% "play-java" % "2.2.4" exclude("org.yaml", "snakeyaml") exclude("org.hibernate", "hibernate-validator") exclude("org.springframework", "spring-context") exclude("org.springframework", "spring-core") exclude("org.springframework", "spring-beans") exclude("javax.servlet", "javax.servlet-api") exclude("com.typesafe.play", "play-json_2.10") exclude("com.typesafe.play", "templates_2.10"),
   crossScalaVersions in ThisBuild := Seq("2.10.4"),
-  sourceDirectory := play2_3JavaClient.base.getAbsoluteFile / sourceDirectory.value.getName
-).dependsOn(scalaClient)
+  sourceDirectory := `play-2_3-java-client`.base.getAbsoluteFile / sourceDirectory.value.getName
+).dependsOn(`scala-client`)
 
-lazy val scalaClient = project.configs(IntegrationTest)
+lazy val `scala-client` = project.configs(IntegrationTest)
 
 resolvers in ThisBuild += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
 

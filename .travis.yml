@@ -1,0 +1,13 @@
+language: scala
+scala:
+- 2.10.4
+script:
+- sbt test it:test
+notifications:
+  email:
+    on_success: never
+    on_failure: change
+jdk:
+- oraclejdk8
+matrix:
+  fast_finish: true

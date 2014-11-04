@@ -32,6 +32,8 @@ libraryDependencies in ThisBuild ++=
 
 javacOptions in ThisBuild ++= Seq("-deprecation", "-Xlint:unchecked", "-source", "1.8", "-target", "1.8", "-Xlint:all", "-Xlint:-options", "-Xlint:-path", "-Werror", "-parameters")
 
+javacOptions in (Compile, doc) in ThisBuild := Nil
+
 scalaVersion in ThisBuild := "2.10.4"
 
 scalacOptions in ThisBuild ++= Seq("-deprecation", "-unchecked", "-feature", "-language:implicitConversions", "-language:postfixOps")

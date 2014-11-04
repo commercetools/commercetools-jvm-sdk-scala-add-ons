@@ -43,3 +43,7 @@ Defaults.itSettings
 releaseSettings
 
 Release.publishSettings
+
+licenses in ThisBuild := Seq("Apache" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
+
+homepage in ThisBuild := Some(url("https://github.com/sphereio/sphere-jvm-sdk-scala-add-ons"))

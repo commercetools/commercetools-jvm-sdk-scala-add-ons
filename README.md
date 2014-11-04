@@ -5,6 +5,8 @@ sphere-jvm-sdk-scala-add-ons
 
 [![Build Status](https://travis-ci.org/sphereio/sphere-jvm-sdk-scala-add-ons.png?branch=master)](https://travis-ci.org/sphereio/sphere-jvm-sdk-scala-add-ons)
 
+This repository is for in Scala implemented stuff to extend the https://github.com/sphereio/sphere-jvm-sdk .
+
 ## Usage for Play 2.3
 
 in build.sbt:

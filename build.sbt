@@ -41,3 +41,5 @@ scalacOptions in ThisBuild ++= Seq("-deprecation", "-unchecked", "-feature", "-l
 Defaults.itSettings
 
 releaseSettings
+
+Release.publishSettings

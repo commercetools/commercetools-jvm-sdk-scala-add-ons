@@ -4,7 +4,7 @@ resolvers += "Sonatype Repo" at "https://oss.sonatype.org/content/groups/public/
 
 resolvers += Resolver.sonatypeRepo("releases")
 
-addSbtPlugin("com.github.gseitz" % "sbt-release" % "0.8.5")
+addSbtPlugin("com.github.gseitz" % "sbt-release" % "0.7.1")
 
 //http://www.scala-sbt.org/sbt-pgp/
 addSbtPlugin("com.typesafe.sbt" % "sbt-pgp" % "0.8.3")

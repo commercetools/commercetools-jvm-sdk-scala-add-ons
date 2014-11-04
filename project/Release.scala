@@ -41,9 +41,9 @@ object Release {
       } else
         None
     },
-    publishMavenStyle := true,
-    publishArtifact in Test := false,
-    pomExtra := (
+    publishMavenStyle in ThisBuild := true,
+    publishArtifact in Test in ThisBuild := false,
+    pomExtra in ThisBuild := (
       <scm>
         <url>git@github.com:commercetools/sphere-play-sdk.git</url>
         <connection>scm:git:git@github.com:commercetools/sphere-play-sdk.git</connection>

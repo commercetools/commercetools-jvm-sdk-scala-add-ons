@@ -1,19 +1,25 @@
 autoScalaLibrary := true
 
-crossScalaVersions in ThisBuild := Seq("2.10.4", "2.11.0")
+val scala210 = "2.10.4"
+
+crossScalaVersions in ThisBuild := Seq(scala210, "2.11.0")
 
 crossPaths := true
 
-lazy val root = (project in file(".")).configs(IntegrationTest).aggregate(`play-2_3-java-client`, `play-2_2-java-client`, `scala-client`)
+lazy val root = (project in file(".")).configs(IntegrationTest).aggregate(`play-2_3-java-client`, `play-2_2-java-client`, `scala-client`).settings(
+  packagedArtifacts := Map.empty,
+  name := "sphere-jvm-sdk-scala-add-ons"
+)
 
 lazy val `play-2_3-java-client` = project.configs(IntegrationTest).settings(
   libraryDependencies += "com.typesafe.play" %% "play-java" % "2.3.5"
 ).dependsOn(`scala-client`)
 
 lazy val `play-2_2-java-client` = project.configs(IntegrationTest).settings(
-  libraryDependencies += "com.typesafe.play" %% "play-java" % "2.2.4" exclude("org.yaml", "snakeyaml") exclude("org.hibernate", "hibernate-validator") exclude("org.springframework", "spring-context") exclude("org.springframework", "spring-core") exclude("org.springframework", "spring-beans") exclude("javax.servlet", "javax.servlet-api") exclude("com.typesafe.play", "play-json_2.10") exclude("com.typesafe.play", "templates_2.10"),
-  crossScalaVersions in ThisBuild := Seq("2.10.4"),
-  sourceDirectory := `play-2_3-java-client`.base.getAbsoluteFile / sourceDirectory.value.getName
+  libraryDependencies += "com.typesafe.play" % "play-java_2.10" % "2.2.4" exclude("org.yaml", "snakeyaml") exclude("org.hibernate", "hibernate-validator") exclude("org.springframework", "spring-context") exclude("org.springframework", "spring-core") exclude("org.springframework", "spring-beans") exclude("javax.servlet", "javax.servlet-api") exclude("com.typesafe.play", "play-json_2.10") exclude("com.typesafe.play", "templates_2.10"),
+  crossScalaVersions := Seq(scala210),
+  sourceDirectory := `play-2_3-java-client`.base.getAbsoluteFile / sourceDirectory.value.getName,
+  packagedArtifacts := (if(scalaVersion.value == scala210) packagedArtifacts.value else Map.empty)
 ).dependsOn(`scala-client`)
 
 lazy val `scala-client` = project.configs(IntegrationTest)
@@ -34,7 +40,7 @@ javacOptions in ThisBuild ++= Seq("-deprecation", "-Xlint:unchecked", "-source",
 
 javacOptions in (Compile, doc) in ThisBuild := Nil
 
-scalaVersion in ThisBuild := "2.10.4"
+scalaVersion in ThisBuild := scala210
 
 scalacOptions in ThisBuild ++= Seq("-deprecation", "-unchecked", "-feature", "-language:implicitConversions", "-language:postfixOps")
 

@@ -34,6 +34,7 @@ object Release {
       else
         Some("releases"  at nexus + "service/local/staging/deploy/maven2")
     },
+    ReleaseKeys.crossBuild := true,
     com.typesafe.sbt.pgp.PgpKeys.pgpPassphrase in Global := {
       val pgpPassphraseFile = file(pathToPgpPassphrase)
       if(pgpPassphraseFile.exists && pgpPassphraseFile.canRead) {

@@ -13,7 +13,7 @@ in build.sbt:
 
 ```
 libraryDependencies ++= Seq(
-  "io.sphere.sdk.jvm" % "models" % "1.0.0-M7",
+  "io.sphere.sdk.jvm" % "models" % "1.0.0-M8",
   "io.sphere.sdk.jvm" %% "play-2_3-java-client" % "1.0.0-M8"
 )
 ```

@@ -4,6 +4,6 @@ import io.sphere.sdk.queries.{FetchImpl, Fetch}
 import io.sphere.sdk.http.{JsonEndpoint, HttpRequest, HttpMethod}
 
 class XyzService {
-  def fetchById(id: String): Fetch[Xyz] = new FetchImpl[Xyz](Versioned.of(id, 0), JsonEndpoint.of(new TypeReference[Xyz]() {}, "/dummy-endpoint")) {
+  def fetchById(id: String): Fetch[Xyz] = new FetchImpl[Xyz](JsonEndpoint.of(new TypeReference[Xyz]() {}, "/dummy-endpoint"), id) {
   }
 }

@@ -29,7 +29,7 @@ resolvers in ThisBuild += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/
 organization in ThisBuild := "io.sphere.sdk.jvm"
 
 libraryDependencies in ThisBuild ++=
-  "io.sphere.sdk.jvm" % "java-client" % "1.0.0-M6" ::
+  "io.sphere.sdk.jvm" % "java-client" % "1.0.0-M9" ::
   "org.easytesting" % "fest-assert" % "1.4" % "test,it" ::
   "junit" % "junit-dep" % "4.11" % "test,it" ::
   "com.novocode" % "junit-interface" % "0.10" % "test, it" ::

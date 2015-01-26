@@ -1,11 +1,13 @@
 import java.util.Optional
 import com.typesafe.config.ConfigFactory
 import io.sphere.sdk.client._
-import io.sphere.sdk.http.{HttpClientTestDouble, Requestable, HttpResponse, ClientRequest}
+import io.sphere.sdk.http.{HttpRequest, Requestable, HttpResponse}
 import org.junit.Test
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 import org.fest.assertions.Assertions.assertThat
+
+import java.util.function.Function
 
 class ScalaClientTest {
 
@@ -21,8 +23,8 @@ class ScalaClientTest {
 
   @Test
   def `serve fetch requests providing JSON`: Unit = {
-    withClient(new ScalaClientImpl(config, new HttpClientTestDouble {
-      override def testDouble(requestable: Requestable) = HttpResponse.of(200, """{"id":1}""")
+    withClient(ScalaSphereClientFactory.createHttpTestDouble(new Function[HttpRequest, HttpResponse] {
+      override def apply(t: HttpRequest): HttpResponse = HttpResponse.of(200, """{"id":1}""")
     })) { client =>
       val service = new XyzService
       val result = client.execute(service.fetchById("1"))
@@ -32,8 +34,8 @@ class ScalaClientTest {
 
   @Test
   def `serve fetch requests providing instance`: Unit = {
-    withClient(new ScalaClientImpl(config, new SphereRequestExecutorTestDouble {
-      override protected def result[T](fetch: ClientRequest[T]): T = Optional.of(new Xyz("1")).asInstanceOf[T]
+    withClient(ScalaSphereClientFactory.createObjectTestDouble(new Function[HttpRequest, AnyRef] {
+      override def apply(t: HttpRequest): AnyRef = Optional.of(new Xyz("1"))
     })) { client =>
       val service = new XyzService
       val result: Future[Optional[Xyz]] = client.execute(service.fetchById("1"))

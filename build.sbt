@@ -26,10 +26,15 @@ lazy val `scala-client` = project.configs(IntegrationTest)
 
 resolvers in ThisBuild += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
 
+resolvers in ThisBuild += Resolver.sonatypeRepo("snapshots")
+
+resolvers in ThisBuild += Resolver.sonatypeRepo("releases")
+
 organization in ThisBuild := "io.sphere.sdk.jvm"
 
 libraryDependencies in ThisBuild ++=
-  "io.sphere.sdk.jvm" % "java-client" % "1.0.0-M9" ::
+  "io.sphere.sdk.jvm" % "java-client" % "1.0.0-M10" ::
+  "com.typesafe" % "config" % "1.2.1" ::
   "org.easytesting" % "fest-assert" % "1.4" % "test,it" ::
   "junit" % "junit-dep" % "4.11" % "test,it" ::
   "com.novocode" % "junit-interface" % "0.10" % "test, it" ::

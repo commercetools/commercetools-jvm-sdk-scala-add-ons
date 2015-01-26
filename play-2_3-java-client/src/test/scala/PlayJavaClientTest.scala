@@ -1,15 +1,17 @@
 import java.util.Optional
 import com.typesafe.config.ConfigFactory
 import io.sphere.sdk.client._
-import io.sphere.sdk.http.{HttpClientTestDouble, Requestable, HttpResponse, ClientRequest}
+import io.sphere.sdk.http.{HttpRequest, Requestable, HttpResponse}
 import org.junit.Test
 import org.fest.assertions.Assertions.assertThat
 
-class PlayJavaClientTest {
+import java.util.function.Function
+
+class PlaySphereClientTest {
 
   val config = ConfigFactory.load()
 
-  def withClient(client: PlayJavaClient)(body: PlayJavaClient => Unit) {
+  def withClient(client: PlayJavaSphereClient)(body: PlayJavaSphereClient => Unit) {
     try {
       body(client)
     } finally {
@@ -19,8 +21,8 @@ class PlayJavaClientTest {
 
   @Test
   def `serve fetch requests providing JSON`: Unit = {
-    withClient(new PlayJavaClientImpl(config, new HttpClientTestDouble {
-      override def testDouble(requestable: Requestable) = HttpResponse.of(200, """{"id":1}""")
+    withClient(PlayJavaSphereClientFactory.of().createHttpTestDouble(new Function[HttpRequest, HttpResponse] {
+      override def apply(t: HttpRequest): HttpResponse = HttpResponse.of(200, """{"id":1}""")
     })) { client =>
       val service = new XyzService
       val result = client.execute(service.fetchById("1"))
@@ -30,8 +32,8 @@ class PlayJavaClientTest {
 
   @Test
   def `serve fetch requests providing instance`: Unit = {
-    withClient(new PlayJavaClientImpl(config, new SphereRequestExecutorTestDouble {
-      override protected def result[T](fetch: ClientRequest[T]): T = Optional.of(new Xyz("1")).asInstanceOf[T]
+    withClient(PlayJavaSphereClientFactory.of().createObjectTestDouble(new Function[HttpRequest, AnyRef] {
+      override def apply(t: HttpRequest): AnyRef = Optional.of(new Xyz("1"))
     })) { client =>
       val service = new XyzService
       val result = client.execute(service.fetchById("1"))

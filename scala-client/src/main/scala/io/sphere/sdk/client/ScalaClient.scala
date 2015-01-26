@@ -3,30 +3,22 @@ package io.sphere.sdk.client
 import java.io.Closeable
 import java.util.concurrent.CompletableFuture
 
-import io.sphere.sdk.http.{HttpClient, ClientRequest}
 
 import scala.concurrent.Future
-import com.typesafe.config.Config
 
 trait ScalaClient extends Closeable {
-  def execute[T](clientRequest: ClientRequest[T]): Future[T]
+  def execute[T](SphereRequest: SphereRequest[T]): Future[T]
   
   def close(): Unit
 }
 
-class ScalaClientImpl(config: Config, sphereRequestExecutor: SphereRequestExecutor) extends ScalaClient {
+private[client] class ScalaClientImpl(sphereClient: SphereClient) extends ScalaClient {
 
   import ScalaAsync._
 
-  private val javaClient: JavaClient = new JavaClientImpl(config, sphereRequestExecutor)
+  override def execute[T](SphereRequest: SphereRequest[T]): Future[T] = sphereClient.execute(SphereRequest).asScala
 
-  def this(config: Config, httpClient: HttpClient) = this(config, new HttpSphereRequestExecutor(httpClient, config))
-
-  def this(config: Config) = this(config, new NingAsyncHttpClient(config))
-
-  override def execute[T](clientRequest: ClientRequest[T]): Future[T] = javaClient.execute(clientRequest).asScala
-
-  override def close(): Unit = javaClient.close()
+  override def close(): Unit = sphereClient.close()
 }
 
 private[client] object ScalaAsync {

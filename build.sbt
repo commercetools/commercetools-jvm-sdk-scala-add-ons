@@ -13,14 +13,13 @@ lazy val root = (project in file(".")).configs(IntegrationTest).aggregate(`play-
 
 lazy val `play-2_3-java-client` = project.configs(IntegrationTest).settings(
   libraryDependencies += "com.typesafe.play" %% "play-java" % "2.3.5"
-).dependsOn(`scala-client`)
+)
 
 lazy val `play-2_2-java-client` = project.configs(IntegrationTest).settings(
   libraryDependencies += "com.typesafe.play" % "play-java_2.10" % "2.2.4" exclude("org.yaml", "snakeyaml") exclude("org.hibernate", "hibernate-validator") exclude("org.springframework", "spring-context") exclude("org.springframework", "spring-core") exclude("org.springframework", "spring-beans") exclude("javax.servlet", "javax.servlet-api") exclude("com.typesafe.play", "play-json_2.10") exclude("com.typesafe.play", "templates_2.10"),
   crossScalaVersions := Seq(scala210),
-  sourceDirectory := `play-2_3-java-client`.base.getAbsoluteFile / sourceDirectory.value.getName,
   packagedArtifacts := (if(scalaVersion.value == scala210) packagedArtifacts.value else Map.empty)
-).dependsOn(`scala-client`)
+)
 
 lazy val `scala-client` = project.configs(IntegrationTest)
 
@@ -32,12 +31,15 @@ resolvers in ThisBuild += Resolver.sonatypeRepo("releases")
 
 organization in ThisBuild := "io.sphere.sdk.jvm"
 
+val jvmSdkVersion = "1.0.0-M11"
+
 libraryDependencies in ThisBuild ++=
-  "io.sphere.sdk.jvm" % "java-client" % "1.0.0-M10" ::
+  "io.sphere.sdk.jvm" % "java-client" % jvmSdkVersion ::
+  "io.sphere.sdk.jvm" % "models" % jvmSdkVersion % "test" ::
   "com.typesafe" % "config" % "1.2.1" ::
-  "org.easytesting" % "fest-assert" % "1.4" % "test,it" ::
-  "junit" % "junit-dep" % "4.11" % "test,it" ::
-  "com.novocode" % "junit-interface" % "0.10" % "test, it" ::
+  "org.easytesting" % "fest-assert" % "1.4" % "test" ::
+  "junit" % "junit-dep" % "4.11" % "test" ::
+  "com.novocode" % "junit-interface" % "0.10" % "test" ::
   Nil
 
 

@@ -1,6 +1,8 @@
 package io.sphere.sdk.client;
 
 import play.libs.F;
+import scala.concurrent.Promise;
+import scala.concurrent.Promise$;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -22,15 +24,15 @@ final class PlayJavaSphereClientImpl implements PlayJavaSphereClient {
     }
 
     private static <T> F.Promise<T> convert(final CompletableFuture<T> future) {
-        F.RedeemablePromise<T> promise = F.RedeemablePromise.empty();
+        final Promise<T> scalaPromise = Promise$.MODULE$.apply();
         future.whenComplete((value, throwable) -> {
             if (throwable == null) {
-                promise.success(value);
+                scalaPromise.success(value);
             } else {
-                promise.failure(throwable);
+                scalaPromise.failure(throwable);
             }
         });
-        return promise;
+        return F.Promise.wrap(scalaPromise.future());
     }
 
     public static PlayJavaSphereClient of(final SphereClient sphereClient) {

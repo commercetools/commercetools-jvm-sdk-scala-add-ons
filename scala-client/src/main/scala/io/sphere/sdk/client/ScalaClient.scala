@@ -6,8 +6,14 @@ import java.util.concurrent.CompletableFuture
 
 import scala.concurrent.Future
 
+object ScalaClient {
+  def apply(sphereClient: SphereClient): ScalaClient = new ScalaClientImpl(sphereClient)
+}
+
 trait ScalaClient extends Closeable {
-  def execute[T](SphereRequest: SphereRequest[T]): Future[T]
+  def execute[T](sphereRequest: SphereRequest[T]): Future[T]
+  
+  def apply[T](sphereRequest: SphereRequest[T]): Future[T] = execute(sphereRequest)
   
   def close(): Unit
 }
@@ -30,7 +36,7 @@ private[client] object ScalaAsync {
 
   def asFuture[T](completableFuture: CompletableFuture[T]): Future[T] = {
     val promise: ScalaPromise[T] = ScalaPromise()
-    completableFuture.whenComplete(new CompletableFutureMapper(promise));
+    completableFuture.whenComplete(new CompletableFutureMapper(promise))
     return promise.future
   }
 }

@@ -31,7 +31,7 @@ resolvers in ThisBuild += Resolver.sonatypeRepo("releases")
 
 organization in ThisBuild := "io.sphere.sdk.jvm"
 
-val jvmSdkVersion = "1.0.0-M11"
+val jvmSdkVersion = "1.0.0-M12"
 
 libraryDependencies in ThisBuild ++=
   "io.sphere.sdk.jvm" % "java-client" % jvmSdkVersion ::

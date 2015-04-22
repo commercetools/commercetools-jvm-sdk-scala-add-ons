@@ -25,7 +25,7 @@ final class PlayJavaSphereClientImpl implements PlayJavaSphereClient {
 
     private static <T> F.Promise<T> convert(final CompletionStage<T> stage) {
         final Promise<T> scalaPromise = Promise$.MODULE$.apply();
-        stage.whenComplete((value, throwable) -> {
+        stage.whenCompleteAsync((value, throwable) -> {
             if (throwable == null) {
                 scalaPromise.success(value);
             } else {

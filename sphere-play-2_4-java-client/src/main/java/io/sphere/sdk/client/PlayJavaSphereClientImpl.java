@@ -23,7 +23,7 @@ final class PlayJavaSphereClientImpl implements PlayJavaSphereClient {
 
     private static <T> F.Promise<T> convert(final CompletionStage<T> stage) {
         F.RedeemablePromise<T> promise = F.RedeemablePromise.empty();
-        stage.whenComplete((value, throwable) -> {
+        stage.whenCompleteAsync((value, throwable) -> {
             if (throwable == null) {
                 promise.success(value);
             } else {

@@ -33,7 +33,7 @@ public class PlaySphereClientTest {
                 return HTTP_REQUEST_INTENT;
             }
         });
-        assertThat(promise.get(0, TimeUnit.SECONDS)).isEqualTo("la string");
+        assertThat(promise.get(500, TimeUnit.MILLISECONDS)).isEqualTo("la string");
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -51,7 +51,7 @@ public class PlaySphereClientTest {
                 return HTTP_REQUEST_INTENT;
             }
         });
-        promise.get(0, TimeUnit.SECONDS);
+        promise.get(500, TimeUnit.MILLISECONDS);
     }
 
     private PlayJavaSphereClient createClient(Function<HttpRequestIntent, HttpResponse> function) {

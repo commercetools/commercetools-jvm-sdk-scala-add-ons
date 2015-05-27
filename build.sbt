@@ -15,11 +15,11 @@ lazy val root = (project in file(".")).configs(IntegrationTest).aggregate(`spher
 )
 
 lazy val `sphere-play-2_4-java-client` = project.configs(IntegrationTest).settings(
-  libraryDependencies ++= Seq("com.typesafe.play" %% "play-java" % "2.4.0-M3", sphereNing19)
+  libraryDependencies ++= Seq("com.typesafe.play" %% "play-java" % "2.4.0", sphereNing19)
 )
 
 lazy val `sphere-play-2_3-java-client` = project.configs(IntegrationTest).settings(
-  libraryDependencies ++= Seq("com.typesafe.play" %% "play-java" % "2.3.8", sphereNing18)
+  libraryDependencies ++= Seq("com.typesafe.play" %% "play-java" % "2.3.9", sphereNing18)
 )
 
 lazy val `sphere-play-2_2-java-client` = project.configs(IntegrationTest).settings(

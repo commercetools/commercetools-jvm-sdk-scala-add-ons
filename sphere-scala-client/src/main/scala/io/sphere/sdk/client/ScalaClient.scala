@@ -1,6 +1,5 @@
 package io.sphere.sdk.client
 
-import java.io.Closeable
 import java.util.concurrent.CompletionStage
 
 
@@ -10,7 +9,7 @@ object ScalaClient {
   def apply(sphereClient: SphereClient): ScalaClient = new ScalaClientImpl(sphereClient)
 }
 
-trait ScalaClient extends Closeable {
+trait ScalaClient extends AutoCloseable {
   def execute[T](sphereRequest: SphereRequest[T]): Future[T]
   
   def apply[T](sphereRequest: SphereRequest[T]): Future[T] = execute(sphereRequest)

@@ -1,12 +1,14 @@
 package io.sphere.sdk.queries
 
-import io.sphere.sdk.products.queries.ProductProjectionQuery
+import io.sphere.sdk.products.ProductProjectionType.STAGED
+import io.sphere.sdk.products.queries.{ProductProjectionByIdFetch, ProductProjectionQuery}
 import org.junit.Test
 import io.sphere.sdk.queries.Implicits._
 import org.assertj.core.api.Assertions._
 
 class ImplicitsTest {
   val query = ProductProjectionQuery.ofStaged
+  val fetch = ProductProjectionByIdFetch.of("foo", STAGED)
 
   @Test
   def `withPredicate`: Unit = {
@@ -24,12 +26,22 @@ class ImplicitsTest {
   }
 
   @Test
-  def `plusExpansionPaths`: Unit = {
+  def `query plusExpansionPaths`: Unit = {
     assertThat(query.plusExpansionPathsScala(_.productType).expansionPaths.get(0).toSphereExpand).isEqualTo("""productType""")
   }
 
   @Test
-  def `withExpansionPaths`: Unit = {
+  def `query withExpansionPaths`: Unit = {
     assertThat(query.withExpansionPathsScala(_.productType).expansionPaths.get(0).toSphereExpand).isEqualTo("""productType""")
+  }
+
+  @Test
+  def `fetch plusExpansionPaths`: Unit = {
+    assertThat(fetch.plusExpansionPathsScala(_.productType).expansionPaths.get(0).toSphereExpand).isEqualTo("""productType""")
+  }
+
+  @Test
+  def `fetch withExpansionPaths`: Unit = {
+    assertThat(fetch.withExpansionPathsScala(_.productType).expansionPaths.get(0).toSphereExpand).isEqualTo("""productType""")
   }
 }

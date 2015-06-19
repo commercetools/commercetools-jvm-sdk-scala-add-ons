@@ -33,4 +33,16 @@ object Implicits {
       model.withExpansionPaths(function)
     }
   }
+
+  implicit class RichMetaModelFetchDsl[T,C <: MetaModelFetchDsl[T,C,E],E](model: MetaModelFetchDsl[T,C,E]) {
+    def plusExpansionPathsScala(f: scala.Function1[E, ExpansionPath[T]]): C = {
+      val function: java.util.function.Function[E, ExpansionPath[T]] = s2j(f)
+      model.plusExpansionPaths(function)
+    }
+
+    def withExpansionPathsScala(f: scala.Function1[E, ExpansionPath[T]]): C = {
+      val function: java.util.function.Function[E, ExpansionPath[T]] = s2j(f)
+      model.withExpansionPaths(function)
+    }
+  }
 }

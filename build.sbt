@@ -1,24 +1,30 @@
 autoScalaLibrary := true
 
-val jvmSdkVersion = "1.0.0-M14"
+val jvmSdkVersion = "1.0.0-M15-201506191505-SNAPSHOT"
+val `sphere-models` = "io.sphere.sdk.jvm" % "sphere-models" % jvmSdkVersion
+val `sphere-java-client-core` = "io.sphere.sdk.jvm" % "sphere-java-client-core" % jvmSdkVersion
 val sphereNing18 = "io.sphere.sdk.jvm" % "sphere-java-client-ning-1_8" % jvmSdkVersion
 val sphereNing19 = "io.sphere.sdk.jvm" % "sphere-java-client-ning-1_9" % jvmSdkVersion
-val scala210 = "2.10.4"
+val scala210 = "2.10.5"
+val scala211 = "2.11.6"
+val scala212 = "2.12.0-M1"
 
-crossScalaVersions in ThisBuild := Seq(scala210, "2.11.6")
+crossScalaVersions in ThisBuild := Seq(scala210, scala211, scala212)
 
 crossPaths := true
 
-lazy val root = (project in file(".")).configs(IntegrationTest).aggregate(`sphere-play-2_4-java-client`, `sphere-play-2_3-java-client`, `sphere-play-2_2-java-client`, `sphere-scala-client`).settings(
+lazy val root = (project in file(".")).configs(IntegrationTest).aggregate(`sphere-play-2_4-java-client`, `sphere-play-2_3-java-client`, `sphere-play-2_2-java-client`, `sphere-scala-client`, `sphere-scala-models`).settings(
   packagedArtifacts := Map.empty,
   name := "sphere-jvm-sdk-scala-add-ons"
 )
 
 lazy val `sphere-play-2_4-java-client` = project.configs(IntegrationTest).settings(
+  crossScalaVersions := Seq(scala210, scala211),
   libraryDependencies ++= Seq("com.typesafe.play" %% "play-java" % "2.4.0", sphereNing19)
 )
 
 lazy val `sphere-play-2_3-java-client` = project.configs(IntegrationTest).settings(
+  crossScalaVersions := Seq(scala210, scala211),
   libraryDependencies ++= Seq("com.typesafe.play" %% "play-java" % "2.3.9", sphereNing18)
 )
 
@@ -30,7 +36,12 @@ lazy val `sphere-play-2_2-java-client` = project.configs(IntegrationTest).settin
 )
 
 lazy val `sphere-scala-client` = project.configs(IntegrationTest).settings(
-  libraryDependencies += sphereNing18
+  libraryDependencies += `sphere-java-client-core`,
+  libraryDependencies += sphereNing18 % "test,it"
+)
+
+lazy val `sphere-scala-models` = project.configs(IntegrationTest).settings(
+  libraryDependencies += `sphere-models`
 )
 
 resolvers in ThisBuild += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
@@ -43,8 +54,8 @@ organization in ThisBuild := "io.sphere.sdk.jvm"
 
 libraryDependencies in ThisBuild ++=
   "io.sphere.sdk.jvm" % "sphere-models" % jvmSdkVersion % "test" ::
-  "com.typesafe" % "config" % "1.2.1" ::
   "org.easytesting" % "fest-assert" % "1.4" % "test" ::
+    "org.assertj" % "assertj-core" % "3.0.0" % "test" ::
   "junit" % "junit-dep" % "4.11" % "test" ::
   "com.novocode" % "junit-interface" % "0.10" % "test" ::
   Nil

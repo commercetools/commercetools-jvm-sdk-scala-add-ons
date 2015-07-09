@@ -2,6 +2,8 @@ package io.sphere.sdk.client;
 
 import play.libs.F;
 
+import static java.util.Objects.requireNonNull;
+
 public interface PlayJavaSphereClient extends AutoCloseable {
 
     <T> F.Promise<T> execute(final SphereRequest<T> sphereRequest);
@@ -9,6 +11,7 @@ public interface PlayJavaSphereClient extends AutoCloseable {
     void close();
 
     static PlayJavaSphereClient of(final SphereClient underlying) {
-        return PlayJavaSphereClientImpl.of(underlying);
+        final String message = "Underlying client instance should not be null.";
+        return PlayJavaSphereClientImpl.of(requireNonNull(underlying, message));
     }
 }

@@ -1,12 +1,14 @@
 package io.sphere.sdk.client
 
 import java.util.concurrent.CompletionStage
-
+import java.util.Objects._
 
 import scala.concurrent.Future
 
 object ScalaClient {
-  def apply(sphereClient: SphereClient): ScalaClient = new ScalaClientImpl(sphereClient)
+  def apply(sphereClient: SphereClient): ScalaClient = {
+    new ScalaClientImpl(requireNonNull(sphereClient, "Underlying client instance should not be null."))
+  }
 }
 
 trait ScalaClient extends AutoCloseable {

@@ -7,7 +7,7 @@ val sphereNing18 = "io.sphere.sdk.jvm" % "sphere-java-client-ahc-1_8" % jvmSdkVe
 val sphereNing19 = "io.sphere.sdk.jvm" % "sphere-java-client-ahc-1_9" % jvmSdkVersion
 val scala210 = "2.10.5"
 val scala211 = "2.11.6"
-val scala212 = "2.12.0-M1"
+val scala212 = "2.12.0-M2"
 
 val allScalaVersions = Seq(scala210, scala211, scala212)
 

@@ -25,7 +25,7 @@ public class PlaySphereClientTest {
         final F.Promise<String> promise = client.execute(new SphereRequest<String>() {
             @Override
             public String deserialize(HttpResponse httpResponse) {
-                return new String(httpResponse.getResponseBody().get(), StandardCharsets.UTF_8);
+                return new String(httpResponse.getResponseBody(), StandardCharsets.UTF_8);
             }
 
             @Override
@@ -55,6 +55,6 @@ public class PlaySphereClientTest {
     }
 
     private PlayJavaSphereClient createClient(Function<HttpRequestIntent, HttpResponse> function) {
-        return PlayJavaSphereClient.of(SphereClientFactory.of().createHttpTestDouble(function));
+        return PlayJavaSphereClient.of(SphereClientFactory.createHttpTestDouble(function));
     }
 }

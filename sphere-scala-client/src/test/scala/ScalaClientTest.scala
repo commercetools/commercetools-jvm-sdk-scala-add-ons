@@ -19,7 +19,7 @@ class ScalaClientTest {
     val request = new SphereRequest[String] {
       override def httpRequestIntent(): HttpRequestIntent = intent
 
-      override def deserialize(httpResponse: HttpResponse) = new Predef.String(httpResponse.getResponseBody.get, StandardCharsets.UTF_8)
+      override def deserialize(httpResponse: HttpResponse) = new Predef.String(httpResponse.getResponseBody, StandardCharsets.UTF_8)
     }
     val future: Future[String] = client(request)
     val result: String = Await.result(future, Duration("1 s"))
@@ -40,6 +40,6 @@ class ScalaClientTest {
   }
 
   private def createClient(function: Function[HttpRequestIntent, HttpResponse]): ScalaClient = {
-    return ScalaClient(SphereClientFactory.of.createHttpTestDouble(function))
+    return ScalaClient(SphereClientFactory.createHttpTestDouble(function))
   }
 }

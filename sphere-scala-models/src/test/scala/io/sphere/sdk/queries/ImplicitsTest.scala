@@ -1,18 +1,18 @@
 package io.sphere.sdk.queries
 
 import io.sphere.sdk.products.ProductProjectionType.STAGED
-import io.sphere.sdk.products.queries.{ProductProjectionByIdFetch, ProductProjectionQuery}
+import io.sphere.sdk.products.queries.{ProductProjectionByIdGet, ProductProjectionQuery}
 import org.junit.Test
 import io.sphere.sdk.queries.Implicits._
 import org.assertj.core.api.Assertions._
 
 class ImplicitsTest {
   val query = ProductProjectionQuery.ofStaged
-  val fetch = ProductProjectionByIdFetch.of("foo", STAGED)
+  val fetch = ProductProjectionByIdGet.of("foo", STAGED)
 
   @Test
   def `withPredicate`: Unit = {
-    assertThat(query.withPredicateScala(_.id.is("foo")).predicate.get.toSphereQuery).isEqualTo("""id="foo"""")
+    assertThat(query.withPredicatesScala(_.id.is("foo")).predicates.get(0).toSphereQuery).isEqualTo("""id="foo"""")
   }
 
   @Test

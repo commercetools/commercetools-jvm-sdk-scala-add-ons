@@ -1,16 +1,16 @@
 package io.sphere.sdk.queries
 
 
-import io.sphere.sdk.expansion.ExpansionPath
+import io.sphere.sdk.expansion.{MetaModelExpansionDsl, ExpansionPath}
 import io.sphere.sdk.util.functional.ScalaFunctionConversions._
 import scala.collection.JavaConversions._
 import scala.collection.JavaConverters._
 
 object Implicits {
   implicit class RichMetaModelQueryDsl[T,C <: MetaModelQueryDsl[T,C,Q,E],Q,E](model: MetaModelQueryDsl[T,C,Q,E]) {
-    def withPredicateScala(f: scala.Function1[Q, QueryPredicate[T]]): C = {
+    def withPredicatesScala(f: scala.Function1[Q, QueryPredicate[T]]): C = {
       val function: java.util.function.Function[Q, QueryPredicate[T]] = s2j(f)
-      model.withPredicate(function)
+      model.withPredicates(function)
     }
 
     def withSortScala(f: scala.Function1[Q, QuerySort[T]]): C = {
@@ -22,19 +22,9 @@ object Implicits {
       val function: java.util.function.Function[Q, java.util.List[QuerySort[T]]] = s2j(f.andThen(_.asJava.toList))
       model.withSortMulti(function)
     }
-
-    def plusExpansionPathsScala(f: scala.Function1[E, ExpansionPath[T]]): C = {
-      val function: java.util.function.Function[E, ExpansionPath[T]] = s2j(f)
-      model.plusExpansionPaths(function)
-    }
-
-    def withExpansionPathsScala(f: scala.Function1[E, ExpansionPath[T]]): C = {
-      val function: java.util.function.Function[E, ExpansionPath[T]] = s2j(f)
-      model.withExpansionPaths(function)
-    }
   }
 
-  implicit class RichMetaModelFetchDsl[T,C <: MetaModelFetchDsl[T,C,E],E](model: MetaModelFetchDsl[T,C,E]) {
+  implicit class RichMetaModelGetDsl[T,C <: MetaModelExpansionDsl[T,C,E],E](model: MetaModelExpansionDsl[T,C,E]) {
     def plusExpansionPathsScala(f: scala.Function1[E, ExpansionPath[T]]): C = {
       val function: java.util.function.Function[E, ExpansionPath[T]] = s2j(f)
       model.plusExpansionPaths(function)

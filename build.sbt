@@ -1,6 +1,6 @@
 autoScalaLibrary := true
 
-val jvmSdkVersion = "1.0.0-M17"
+val jvmSdkVersion = "1.0.0-M18"
 val `sphere-models` = "io.sphere.sdk.jvm" % "sphere-models" % jvmSdkVersion
 val `sphere-java-client-core` = "io.sphere.sdk.jvm" % "sphere-java-client-core" % jvmSdkVersion
 val sphereNing18 = "io.sphere.sdk.jvm" % "sphere-java-client-ahc-1_8" % jvmSdkVersion

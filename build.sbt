@@ -5,8 +5,8 @@ val `sphere-models` = "io.sphere.sdk.jvm" % "sphere-models" % jvmSdkVersion
 val `sphere-java-client-core` = "io.sphere.sdk.jvm" % "sphere-java-client-core" % jvmSdkVersion
 val sphereNing18 = "io.sphere.sdk.jvm" % "sphere-java-client-ahc-1_8" % jvmSdkVersion
 val sphereNing19 = "io.sphere.sdk.jvm" % "sphere-java-client-ahc-1_9" % jvmSdkVersion
-val scala210 = "2.10.5"
-val scala211 = "2.11.6"
+val scala210 = "2.10.6"
+val scala211 = "2.11.7"
 val scala212 = "2.12.0-M3"
 
 val allScalaVersions = Seq(scala210, scala211, scala212)
@@ -15,27 +15,34 @@ crossPaths := true
 
 crossScalaVersions in ThisBuild := allScalaVersions
 
-lazy val root = (project in file(".")).configs(IntegrationTest).aggregate(`sphere-play-2_4-java-client`, `sphere-play-2_3-java-client`, `sphere-play-2_2-java-client`, `sphere-scala-client`, `sphere-scala-models`).settings(
+lazy val root = (project in file(".")).configs(IntegrationTest).aggregate(`sphere-play-2_5-java-client`, `sphere-play-2_4-java-client`, `sphere-play-2_3-java-client`, `sphere-play-2_2-java-client`, `sphere-scala-client`, `sphere-scala-models`).settings(
   packagedArtifacts := Map.empty,
   name := "sphere-jvm-sdk-scala-add-ons"
 )
 
+lazy val `sphere-play-2_5-java-client` = project.configs(IntegrationTest).settings(
+  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) Seq("com.typesafe.play" %% "play-java" % "2.5.0-M1", sphereNing19) else Nil),
+  crossScalaVersions := Seq(scala211),
+  packagedArtifacts := (if(crossScalaVersions.value.contains(scalaVersion.value)) packagedArtifacts.value else Map.empty),
+  sourceDirectory := (if(crossScalaVersions.value.contains(scalaVersion.value)) sourceDirectory.value else IO.temporaryDirectory)
+)
+
 lazy val `sphere-play-2_4-java-client` = project.configs(IntegrationTest).settings(
-  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) Seq("com.typesafe.play" %% "play-java" % "2.4.0", sphereNing19) else Nil),
+  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) Seq("com.typesafe.play" %% "play-java" % "2.4.4", sphereNing19) else Nil),
   crossScalaVersions := Seq(scala210, scala211),
   packagedArtifacts := (if(crossScalaVersions.value.contains(scalaVersion.value)) packagedArtifacts.value else Map.empty),
   sourceDirectory := (if(crossScalaVersions.value.contains(scalaVersion.value)) sourceDirectory.value else IO.temporaryDirectory)
 )
 
 lazy val `sphere-play-2_3-java-client` = project.configs(IntegrationTest).settings(
-  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) Seq("com.typesafe.play" %% "play-java" % "2.3.9", sphereNing18) else Nil),
+  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) Seq("com.typesafe.play" %% "play-java" % "2.3.10", sphereNing18) else Nil),
   crossScalaVersions := Seq(scala210, scala211),
   packagedArtifacts := (if(crossScalaVersions.value.contains(scalaVersion.value)) packagedArtifacts.value else Map.empty),
   sourceDirectory := (if(crossScalaVersions.value.contains(scalaVersion.value)) sourceDirectory.value else IO.temporaryDirectory)
 )
 
 lazy val `sphere-play-2_2-java-client` = project.configs(IntegrationTest).settings(
-  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) (sphereNing18 :: ("com.typesafe.play" %% "play-java" % "2.2.4" exclude("org.yaml", "snakeyaml") exclude("org.hibernate", "hibernate-validator") exclude("org.springframework", "spring-context") exclude("org.springframework", "spring-core") exclude("org.springframework", "spring-beans") exclude("javax.servlet", "javax.servlet-api") exclude("com.typesafe.play", "play-json_2.10") exclude("com.typesafe.play", "templates_2.10")) :: Nil) else Nil),
+  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) (sphereNing18 :: ("com.typesafe.play" %% "play-java" % "2.2.6" exclude("org.yaml", "snakeyaml") exclude("org.hibernate", "hibernate-validator") exclude("org.springframework", "spring-context") exclude("org.springframework", "spring-core") exclude("org.springframework", "spring-beans") exclude("javax.servlet", "javax.servlet-api") exclude("com.typesafe.play", "play-json_2.10") exclude("com.typesafe.play", "templates_2.10")) :: Nil) else Nil),
   crossScalaVersions := Seq(scala210),
   packagedArtifacts := (if(crossScalaVersions.value.contains(scalaVersion.value)) packagedArtifacts.value else Map.empty),
   sourceDirectory := (if(crossScalaVersions.value.contains(scalaVersion.value)) sourceDirectory.value else IO.temporaryDirectory)
@@ -69,7 +76,7 @@ libraryDependencies in ThisBuild ++=
   Nil
 
 
-javacOptions in ThisBuild ++= Seq("-deprecation", "-Xlint:unchecked", "-source", "1.8", "-target", "1.8", "-Xlint:all", "-Xlint:-options", "-Xlint:-path", "-Werror", "-parameters")
+javacOptions in ThisBuild ++= Seq("-deprecation", "-Xlint:unchecked", "-source", "1.8", "-target", "1.8", "-Xlint:all", "-Xlint:-options", "-Xlint:-path", "-parameters")
 
 javacOptions in (Compile, doc) in ThisBuild := Nil
 

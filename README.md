@@ -7,16 +7,7 @@ sphere-jvm-sdk-scala-add-ons
 
 This repository is for in Scala implemented stuff to extend the https://github.com/sphereio/sphere-jvm-sdk .
 
-## Usage for Play 2.3
+## Scala Java 8 compatibility
 
-in build.sbt:
-
-```
-libraryDependencies ++= Seq(
-  "io.sphere.sdk.jvm" % "models" % "1.0.0-M9",
-  "io.sphere.sdk.jvm" %% "play-2_3-java-client" % "1.0.0-M9"
-)
-```
-
-See classes `io.sphere.sdk.client.PlayJavaClient` and `io.sphere.sdk.client.PlayJavaClientImpl`.
+With Scala 2.10.x it can be difficult to use the Java 8 lambdas, this can be solved with https://github.com/scala/scala-java8-compat .
 

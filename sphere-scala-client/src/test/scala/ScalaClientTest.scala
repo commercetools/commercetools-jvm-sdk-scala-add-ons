@@ -40,6 +40,6 @@ class ScalaClientTest {
   }
 
   private def createClient(function: Function[HttpRequestIntent, HttpResponse]): ScalaClient = {
-    return ScalaClient(SphereClientFactory.createHttpTestDouble(function))
+    return ScalaClient(TestDoubleSphereClientFactory.createHttpTestDouble(function))
   }
 }

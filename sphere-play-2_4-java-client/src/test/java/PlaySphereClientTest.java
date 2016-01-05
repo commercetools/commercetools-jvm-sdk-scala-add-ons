@@ -1,7 +1,4 @@
-import io.sphere.sdk.client.HttpRequestIntent;
-import io.sphere.sdk.client.PlayJavaSphereClient;
-import io.sphere.sdk.client.SphereClientFactory;
-import io.sphere.sdk.client.SphereRequest;
+import io.sphere.sdk.client.*;
 import io.sphere.sdk.http.HttpMethod;
 import io.sphere.sdk.http.HttpResponse;
 import org.junit.Test;
@@ -55,6 +52,6 @@ public class PlaySphereClientTest {
     }
 
     private PlayJavaSphereClient createClient(Function<HttpRequestIntent, HttpResponse> function) {
-        return PlayJavaSphereClient.of(SphereClientFactory.createHttpTestDouble(function));
+        return PlayJavaSphereClient.of(TestDoubleSphereClientFactory.createHttpTestDouble(function));
     }
 }

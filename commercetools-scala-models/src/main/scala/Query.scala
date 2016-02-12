@@ -1,7 +1,7 @@
 package io.sphere.sdk.queries
 
 
-import io.sphere.sdk.expansion.{ExpansionPathContainer, MetaModelExpansionDsl}
+import io.sphere.sdk.expansion.{ExpansionPathContainer, MetaModelReferenceExpansionDsl}
 import io.sphere.sdk.util.functional.ScalaFunctionConversions._
 import scala.collection.JavaConversions._
 import scala.collection.JavaConverters._
@@ -24,7 +24,7 @@ object Implicits {
     }
   }
 
-  implicit class RichMetaModelGetDsl[T,C <: MetaModelExpansionDsl[T,C,E],E](model: MetaModelExpansionDsl[T,C,E]) {
+  implicit class RichMetaModelGetDsl[T,C <: MetaModelReferenceExpansionDsl[T,C,E],E](model: MetaModelReferenceExpansionDsl[T,C,E]) {
     def plusExpansionPathsScala(f: scala.Function1[E, ExpansionPathContainer[T]]): C = {
       val function: java.util.function.Function[E, ExpansionPathContainer[T]] = s2j(f)
       model.plusExpansionPaths(function)

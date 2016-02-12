@@ -1,10 +1,14 @@
 autoScalaLibrary := true
 
-val jvmSdkVersion = "1.0.0-M26"
-val `sphere-models` = "io.sphere.sdk.jvm" % "sphere-models" % jvmSdkVersion
-val `sphere-java-client-core` = "io.sphere.sdk.jvm" % "sphere-java-client-core" % jvmSdkVersion
-val sphereNing18 = "io.sphere.sdk.jvm" % "sphere-java-client-ahc-1_8" % jvmSdkVersion
-val sphereNing19 = "io.sphere.sdk.jvm" % "sphere-java-client-ahc-1_9" % jvmSdkVersion
+organization in ThisBuild := "com.commercetools.sdk.jvm.scala-add-ons"
+
+val jvmSdkCoreVersion = "1.0.0-RC1"
+val jvmSdkCoreOrganization = "com.commercetools.sdk.jvm.core"
+val jvmSdkModelsName = "commercetools-models"
+val `commercetools-models` = jvmSdkCoreOrganization % jvmSdkModelsName % jvmSdkCoreVersion
+val `commercetools-java-client-core` = jvmSdkCoreOrganization % "commercetools-java-client-core" % jvmSdkCoreVersion
+val commercetoolsAhc18 = jvmSdkCoreOrganization % "commercetools-java-client-ahc-1_8" % jvmSdkCoreVersion
+val commercetoolsAhc19 = jvmSdkCoreOrganization % "commercetools-java-client-ahc-1_9" % jvmSdkCoreVersion
 val scala210 = "2.10.6"
 val scala211 = "2.11.7"
 val scala212 = "2.12.0-M3"
@@ -15,48 +19,48 @@ crossPaths := true
 
 crossScalaVersions in ThisBuild := allScalaVersions
 
-lazy val root = (project in file(".")).configs(IntegrationTest).aggregate(`sphere-play-2_5-java-client`, `sphere-play-2_4-java-client`, `sphere-play-2_3-java-client`, `sphere-play-2_2-java-client`, `sphere-scala-client`, `sphere-scala-models`).settings(
+lazy val root = (project in file(".")).configs(IntegrationTest).aggregate(`commercetools-play-2_5-java-client`, `commercetools-play-2_4-java-client`, `commercetools-play-2_3-java-client`, `commercetools-play-2_2-java-client`, `commercetools-scala-client`, `commercetools-scala-models`).settings(
   packagedArtifacts := Map.empty,
-  name := "sphere-jvm-sdk-scala-add-ons"
+  name := "commercetools-jvm-sdk-scala-add-ons"
 )
 
-lazy val `sphere-play-2_5-java-client` = project.configs(IntegrationTest).settings(
-  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) Seq("com.typesafe.play" %% "play-java" % "2.5.0-M1", sphereNing19) else Nil),
+lazy val `commercetools-play-2_5-java-client` = project.configs(IntegrationTest).settings(
+  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) Seq("com.typesafe.play" %% "play-java" % "2.5.0-M2", commercetoolsAhc19) else Nil),
   crossScalaVersions := Seq(scala211),
   packagedArtifacts := (if(crossScalaVersions.value.contains(scalaVersion.value)) packagedArtifacts.value else Map.empty),
   sourceDirectory := (if(crossScalaVersions.value.contains(scalaVersion.value)) sourceDirectory.value else IO.temporaryDirectory)
 )
 
-lazy val `sphere-play-2_4-java-client` = project.configs(IntegrationTest).settings(
-  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) Seq("com.typesafe.play" %% "play-java" % "2.4.4", sphereNing19) else Nil),
+lazy val `commercetools-play-2_4-java-client` = project.configs(IntegrationTest).settings(
+  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) Seq("com.typesafe.play" %% "play-java" % "2.4.6", commercetoolsAhc19) else Nil),
   crossScalaVersions := Seq(scala210, scala211),
   packagedArtifacts := (if(crossScalaVersions.value.contains(scalaVersion.value)) packagedArtifacts.value else Map.empty),
   sourceDirectory := (if(crossScalaVersions.value.contains(scalaVersion.value)) sourceDirectory.value else IO.temporaryDirectory)
 )
 
-lazy val `sphere-play-2_3-java-client` = project.configs(IntegrationTest).settings(
-  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) Seq("com.typesafe.play" %% "play-java" % "2.3.10", sphereNing18) else Nil),
+lazy val `commercetools-play-2_3-java-client` = project.configs(IntegrationTest).settings(
+  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) Seq("com.typesafe.play" %% "play-java" % "2.3.10", commercetoolsAhc18) else Nil),
   crossScalaVersions := Seq(scala210, scala211),
   packagedArtifacts := (if(crossScalaVersions.value.contains(scalaVersion.value)) packagedArtifacts.value else Map.empty),
   sourceDirectory := (if(crossScalaVersions.value.contains(scalaVersion.value)) sourceDirectory.value else IO.temporaryDirectory)
 )
 
-lazy val `sphere-play-2_2-java-client` = project.configs(IntegrationTest).settings(
-  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) (sphereNing18 :: ("com.typesafe.play" %% "play-java" % "2.2.6" exclude("org.yaml", "snakeyaml") exclude("org.hibernate", "hibernate-validator") exclude("org.springframework", "spring-context") exclude("org.springframework", "spring-core") exclude("org.springframework", "spring-beans") exclude("javax.servlet", "javax.servlet-api") exclude("com.typesafe.play", "play-json_2.10") exclude("com.typesafe.play", "templates_2.10")) :: Nil) else Nil),
+lazy val `commercetools-play-2_2-java-client` = project.configs(IntegrationTest).settings(
+  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) (commercetoolsAhc18 :: ("com.typesafe.play" %% "play-java" % "2.2.6" exclude("org.yaml", "snakeyaml") exclude("org.hibernate", "hibernate-validator") exclude("org.springframework", "spring-context") exclude("org.springframework", "spring-core") exclude("org.springframework", "spring-beans") exclude("javax.servlet", "javax.servlet-api") exclude("com.typesafe.play", "play-json_2.10") exclude("com.typesafe.play", "templates_2.10")) :: Nil) else Nil),
   crossScalaVersions := Seq(scala210),
   packagedArtifacts := (if(crossScalaVersions.value.contains(scalaVersion.value)) packagedArtifacts.value else Map.empty),
   sourceDirectory := (if(crossScalaVersions.value.contains(scalaVersion.value)) sourceDirectory.value else IO.temporaryDirectory)
 )
 
-lazy val `sphere-scala-client` = project.configs(IntegrationTest).settings(
+lazy val `commercetools-scala-client` = project.configs(IntegrationTest).settings(
   crossScalaVersions := allScalaVersions,
-  libraryDependencies += `sphere-java-client-core`,
-  libraryDependencies += sphereNing18 % "test,it"
+  libraryDependencies += `commercetools-java-client-core`,
+  libraryDependencies += commercetoolsAhc18 % "test,it"
 )
 
-lazy val `sphere-scala-models` = project.configs(IntegrationTest).settings(
+lazy val `commercetools-scala-models` = project.configs(IntegrationTest).settings(
   crossScalaVersions := allScalaVersions,
-  libraryDependencies += `sphere-models`
+  libraryDependencies += `commercetools-models`
 )
 
 resolvers in ThisBuild += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
@@ -65,10 +69,8 @@ resolvers in ThisBuild += Resolver.sonatypeRepo("snapshots")
 
 resolvers in ThisBuild += Resolver.sonatypeRepo("releases")
 
-organization in ThisBuild := "io.sphere.sdk.jvm"
-
 libraryDependencies in ThisBuild ++=
-  "io.sphere.sdk.jvm" % "sphere-models" % jvmSdkVersion % "test" ::
+  jvmSdkCoreOrganization % jvmSdkModelsName % jvmSdkCoreVersion % "test" ::
   "org.easytesting" % "fest-assert" % "1.4" % "test" ::
     "org.assertj" % "assertj-core" % "3.0.0" % "test" ::
   "junit" % "junit-dep" % "4.11" % "test" ::

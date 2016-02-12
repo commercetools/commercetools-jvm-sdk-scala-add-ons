@@ -11,10 +11,8 @@ object ScalaClient {
   }
 }
 
-trait ScalaClient extends AutoCloseable {
-  def execute[T](sphereRequest: SphereRequest[T]): Future[T]
-  
-  def apply[T](sphereRequest: SphereRequest[T]): Future[T] = execute(sphereRequest)
+trait ScalaClient extends SphereClient {
+  def apply[T](sphereRequest: SphereRequest[T]): Future[T]
   
   def close(): Unit
 }
@@ -23,7 +21,9 @@ private[client] class ScalaClientImpl(sphereClient: SphereClient) extends ScalaC
 
   import ScalaAsync._
 
-  override def execute[T](SphereRequest: SphereRequest[T]): Future[T] = sphereClient.execute(SphereRequest).asScala
+  override def execute[T](sphereRequest: SphereRequest[T]): CompletionStage[T] = sphereClient.execute(sphereRequest)
+
+  override def apply[T](SphereRequest: SphereRequest[T]): Future[T] = execute(SphereRequest).asScala
 
   override def close(): Unit = sphereClient.close()
 }

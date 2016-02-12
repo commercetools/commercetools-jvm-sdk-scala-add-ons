@@ -4,9 +4,8 @@ import play.libs.F;
 
 import static java.util.Objects.requireNonNull;
 
-public interface PlayJavaSphereClient extends SphereClient {
+public interface PlayJavaSphereClient extends AutoCloseable {
 
-    @Override
     <T> F.Promise<T> execute(final SphereRequest<T> sphereRequest);
 
     @Override

@@ -5,19 +5,19 @@ import java.util.Objects._
 
 import scala.concurrent.Future
 
-object ScalaClient {
-  def apply(sphereClient: SphereClient): ScalaClient = {
-    new ScalaClientImpl(requireNonNull(sphereClient, "Underlying client instance should not be null."))
+object ScalaSphereClient {
+  def apply(sphereClient: SphereClient): ScalaSphereClient = {
+    new ScalaSphereClientImpl(requireNonNull(sphereClient, "Underlying client instance should not be null."))
   }
 }
 
-trait ScalaClient extends SphereClient {
+trait ScalaSphereClient extends SphereClient {
   def apply[T](sphereRequest: SphereRequest[T]): Future[T]
   
   def close(): Unit
 }
 
-private[client] class ScalaClientImpl(sphereClient: SphereClient) extends ScalaClient {
+private[client] class ScalaSphereClientImpl(sphereClient: SphereClient) extends ScalaSphereClient {
 
   import ScalaAsync._
 

@@ -14,6 +14,13 @@ We support 2.10.x, 2.11.x and milestones of 2.12.
 
 ## Scala client
 
+[![][maven img]][maven]
+
+
+```scala
+libraryDependencies += "com.commercetools.sdk.jvm.scala-add-ons" %% "commercetools-scala-client" % "version"
+```
+
 The Scala client wraps a `SphereClient` and can return Scala's `Future`s:
 
 ```scala
@@ -45,6 +52,11 @@ object Demo {
 
 ## Scala models
 
+[![][maven img]][maven]
+
+```scala
+libraryDependencies += "com.commercetools.sdk.jvm.scala-add-ons" %% "commercetools-scala-models" % "version"
+```
 Old Scala versions do not support Java 8 lambdas which are an important part in the commercetools JVM SDK.
 This module provides implicit conversions to support Scala lambdas.
 

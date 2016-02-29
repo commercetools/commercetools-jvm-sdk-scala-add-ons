@@ -25,7 +25,7 @@ lazy val root = (project in file(".")).configs(IntegrationTest).aggregate(`comme
 )
 
 lazy val `commercetools-play-2_5-java-client` = project.configs(IntegrationTest).settings(
-  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) Seq("com.typesafe.play" %% "play-java" % "2.5.0-M2", commercetoolsAhc19) else Nil),
+  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) Seq("com.typesafe.play" %% "play-java" % "2.5.0-RC2", commercetoolsAhc19) else Nil),
   crossScalaVersions := Seq(scala211),
   packagedArtifacts := (if(crossScalaVersions.value.contains(scalaVersion.value)) packagedArtifacts.value else Map.empty),
   sourceDirectory := (if(crossScalaVersions.value.contains(scalaVersion.value)) sourceDirectory.value else IO.temporaryDirectory)

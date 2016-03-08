@@ -9,6 +9,7 @@ val `commercetools-models` = jvmSdkCoreOrganization % jvmSdkModelsName % jvmSdkC
 val `commercetools-java-client-core` = jvmSdkCoreOrganization % "commercetools-java-client-core" % jvmSdkCoreVersion
 val commercetoolsAhc18 = jvmSdkCoreOrganization % "commercetools-java-client-ahc-1_8" % jvmSdkCoreVersion
 val commercetoolsAhc19 = jvmSdkCoreOrganization % "commercetools-java-client-ahc-1_9" % jvmSdkCoreVersion
+val commercetoolsAhc20 = jvmSdkCoreOrganization % "commercetools-java-client-ahc-2_0" % jvmSdkCoreVersion
 val scala210 = "2.10.6"
 val scala211 = "2.11.7"
 val scala212 = "2.12.0-M3"
@@ -25,7 +26,7 @@ lazy val root = (project in file(".")).configs(IntegrationTest).aggregate(`comme
 )
 
 lazy val `commercetools-play-2_5-java-client` = project.configs(IntegrationTest).settings(
-  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) Seq("com.typesafe.play" %% "play-java" % "2.5.0-RC2", commercetoolsAhc19) else Nil),
+  libraryDependencies ++= (if(crossScalaVersions.value.contains(scalaVersion.value)) Seq("com.typesafe.play" %% "play-java" % "2.5.0", commercetoolsAhc20) else Nil),
   crossScalaVersions := Seq(scala211),
   packagedArtifacts := (if(crossScalaVersions.value.contains(scalaVersion.value)) packagedArtifacts.value else Map.empty),
   sourceDirectory := (if(crossScalaVersions.value.contains(scalaVersion.value)) sourceDirectory.value else IO.temporaryDirectory)

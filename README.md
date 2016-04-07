@@ -61,6 +61,7 @@ Old Scala versions do not support Java 8 lambdas which are an important part in 
 This module provides implicit conversions to support Scala lambdas.
 
 ```scala
+import io.sphere.sdk.queries.Implicits._
 val query = ProductProjectionQuery.ofStaged
 val queryById = query.withPredicatesScala(_.id.is("foo"))
 val sortById = query.withSortScala(_.id.sort.asc)

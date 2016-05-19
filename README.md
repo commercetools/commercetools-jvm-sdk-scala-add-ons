@@ -7,7 +7,7 @@ sphere-jvm-sdk-scala-add-ons
 [![][maven img]][maven]
 [![][license img]][license]
 
-This repository is for in Scala implemented stuff to extend the https://github.com/sphereio/sphere-jvm-sdk .
+This repository is for in Scala implemented stuff to extend the https://github.com/commercetools/commercetools-jvm-sdk .
 
 Search for your Scala version on [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.commercetools.sdk.jvm.scala-add-ons%22).
 We support 2.10.x, 2.11.x and milestones of 2.12.
@@ -69,8 +69,8 @@ val expandedQuery = query.plusExpansionPathsScala(_.productType)
 ```
 
 
-[travis]:https://travis-ci.org/sphereio/sphere-jvm-sdk-scala-add-ons
-[travis img]:https://travis-ci.org/sphereio/sphere-jvm-sdk-scala-add-ons.svg?branch=master
+[travis]:https://travis-ci.org/commercetools/sphere-jvm-sdk-scala-add-ons
+[travis img]:https://travis-ci.org/commercetools/sphere-jvm-sdk-scala-add-ons.svg?branch=master
 
 [maven]:http://search.maven.org/#search|gav|1|g:"com.commercetools.sdk.jvm.scala-add-ons"%20AND%20a:"commercetools-scala-client"
 [maven img]:https://maven-badges.herokuapp.com/maven-central/com.commercetools.sdk.jvm.scala-add-ons/commercetools-scala-client_2.11/badge.svg

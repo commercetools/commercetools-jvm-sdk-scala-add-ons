@@ -12,7 +12,7 @@ val commercetoolsAhc19 = jvmSdkCoreOrganization % "commercetools-java-client-ahc
 val commercetoolsAhc20 = jvmSdkCoreOrganization % "commercetools-java-client-ahc-2_0" % jvmSdkCoreVersion
 val scala210 = "2.10.6"
 val scala211 = "2.11.7"
-val scala212 = "2.12.0-M3"
+val scala212 = "2.12.0"
 
 val allScalaVersions = Seq(scala210, scala211, scala212)
 
